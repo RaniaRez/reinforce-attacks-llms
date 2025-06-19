@@ -285,7 +285,7 @@ class PGDMultiPromptAttack(PGDLoss, RedTeamingMethod):
             if (verbose == 2) or step % 50 == 0:
                 self.print(f'Runtime of iteration {step} was {runtime} s')
                 self.print(
-                    f'Average runtime at iteration {step} is {np.stack(log[STEP_LVL_]['runtime'])[:, 0].mean()} s')
+                    f"Average runtime at iteration {step} is {np.stack(log[STEP_LVL_]['runtime'])[:, 0].mean()} s")
 
             test_cases = prompt_mgr.construct_instruction_str(input_ids)
             append_or_allocate(log[STEP_LVL_], 'test_cases', test_cases)
