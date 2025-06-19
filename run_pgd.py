@@ -34,7 +34,7 @@ def default_config():
     )
     data = dict(
         behaviors_path='data/behavior_datasets/harmbench_behaviors_text_all.csv',
-        indices=list(range(15))
+        indices=list(range(4))
     )
     evaluation = dict(
         judge_gen_lengths=(129, 256, 512),
@@ -43,8 +43,8 @@ def default_config():
     )
     attack = dict(
         target_model=dict(
-            model_name_or_path="google/gemma-2b-it",
-            chat_template="gemma",
+            model_name_or_path="meta-llama/Llama-2-7b-chat-hf",
+            chat_template="llama",
             dtype="bfloat16",
             num_gpus=1,
         ),
@@ -141,7 +141,7 @@ def run(_config):
                     for length, (reward, _) in eval_test_case_scores.items()]
     logging.info(f'Eval Rewards: {", ".join(eval_rewards)}')
     logging.info(
-        f'Eval Success: {", ".join([f'{succ} @ {length}' for length, (_, succ) in eval_test_case_scores.items()])}')
+        f"Eval Success: {', '.join([f'{succ} @ {length}' for length, (_, succ) in eval_test_case_scores.items()])}")
     if wandb.run is not None:
         wandb.log({f'final_eval_reward_{k}': v.mean() for k, (v, _) in eval_test_case_scores.items()} |
                   {f'eval_success_{k}': sum([s.lower() == 'yes' for s in succs])
@@ -158,7 +158,7 @@ def run(_config):
                     for length, (reward, _) in test_case_scores.items()]
     logging.info(f'Rewards: {", ".join(test_rewards)}')
     logging.info(
-        f'Success: {", ".join([f'{succ} @ {length}' for length, (_, succ) in test_case_scores.items()])}')
+        f"Success: {', '.join([f'{succ} @ {length}' for length, (_, succ) in test_case_scores.items()])}")
     if wandb.run is not None:
         wandb.log({f'final_reward_{k}': v.mean() for k, (v, _) in test_case_scores.items()} |
                   {f'success_{k}': sum([s.lower() == 'yes' for s in succs])
@@ -175,3 +175,4 @@ def run(_config):
                   test_case_scores=test_case_scores)
 
     np.savez_compressed(file_path, **traces)
+
