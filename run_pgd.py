@@ -43,7 +43,7 @@ def default_config():
     )
     attack = dict(
         target_model=dict(
-            model_name_or_path="meta-llama/Llama-2-7b-chat-hf",
+            model_name_or_path="meta-llama/Llama-3.1-8B-Instruct",
             chat_template="llama",
             dtype="bfloat16",
             num_gpus=1,
